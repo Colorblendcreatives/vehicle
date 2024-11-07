@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .container {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #1e90ff 0%, #87ceeb 100%);
+        }
+        
+        /* Clouds */
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 20px;
+            opacity: 0.8;
+        }
+        
+        .cloud1 {
+            width: 100px;
+            height: 40px;
+            top: 40px;
+            left: 100px;
+        }
+        
+        .cloud2 {
+            width: 120px;
+            height: 50px;
+            top: 80px;
+            right: 150px;
+        }
+        
+        .cloud::before,
+        .cloud::after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+        }
+        
+        .cloud::before {
+            width: 50px;
+            height: 50px;
+            top: -20px;
+            left: 15px;
+        }
+        
+        .cloud::after {
+            width: 30px;
+            height: 30px;
+            top: -10px;
+            right: 15px;
+        }
+        
+        /* Road */
+        .road {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 120px;
+            background: #444;
+            background-image: 
+                linear-gradient(to right, #555 0%, #444 100%),
+                repeating-linear-gradient(45deg, #444 0%, #494949 10%);
+        }
+        
+        .line {
+            position: absolute;
+            bottom: 55px;
+            width: 80px;
+            height: 8px;
+            background: white;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        
+        /* Trees */
+        .tree {
+            position: absolute;
+            bottom: 120px;
+            width: 60px;
+            height: 100px;
+        }
+        
+        .trunk {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 30px;
+            background: #5c3a24;
+        }
+        
+        .leaves {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 80px solid #2d5a27;
+        }
+        
+        /* Car */
+        .car {
+            position: absolute;
+            bottom: 80px;
+            left: 50px;
+            width: 160px;
+            height: 60px;
+            background: linear-gradient(to bottom, #ff5e5e 0%, #ff1a1a 100%);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .car::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: 30px;
+            width: 90px;
+            height: 40px;
+            background: linear-gradient(to bottom, #ff5e5e 0%, #ff1a1a 100%);
+            border-radius: 40px 60px 0 0;
+        }
+        
+        .wheel {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: #333;
+            border-radius: 50%;
+            bottom: -15px;
+            border: 4px solid #666;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+        }
+        
+        .wheel1 { left: 20px; }
+        .wheel2 { right: 20px; }
+        
+        .window {
+            position: absolute;
+            width: 45px;
+            height: 28px;
+            background: #333;
+            top: -20px;
+            right: 30px;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #1e90ff 0%, #4fa9ff 100%);
+        }
+        
+        .headlight {
+            position: absolute;
+            width: 12px;
+            height: 8px;
+            border-radius: 2px;
+        }
+        
+        .headlight-front {
+            right: 15px;
+            top: 15px;
+            background: #ffeb3b;
+            box-shadow: 0 0 10px rgba(255, 235, 59, 0.5);
+        }
+        
+        .headlight-back {
+            left: 15px;
+            top: 15px;
+            background: #ffeb3b;
+            box-shadow: 0 0 10px rgba(255, 235, 59, 0.5);
+        }
+        
+        .headlight.off {
+            background: #333;
+            box-shadow: none;
+        }
+        
+        /* .siren {
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            animation: siren-light 0.8s infinite;
+        }
+        
+        .siren::before,
+        .siren::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+        
+        .siren::before {
+            background: radial-gradient(circle, #ffff00 0%, #ffa500 100%);
+            animation: siren-before 0.8s infinite;
+        }
+        
+        .siren::after {
+            background: radial-gradient(circle, #ff0000 0%, #cc0000 100%);
+            animation: siren-after 0.8s infinite;
+        } */
+        
+        @keyframes siren-light {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        
+        @keyframes siren-before {
+            0% { transform: scale(0.8); }
+            50% { transform: scale(1); }
+            100% { transform: scale(0.8); }
+        }
+        
+        @keyframes siren-after {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.8); }
+            100% { transform: scale(1); }
+        }
+        
+        .dark-mode {
+            background: linear-gradient(to bottom, #333 0%, #444 100%);
+        }
+        
+        .dark-mode .road {
+            background: #222;
+            background-image: 
+                linear-gradient(to right, #333 0%, #222 100%),
+                repeating-linear-gradient(45deg, #222 0%, #2b2b2b 10%);
+        }
+        
+        .dark-mode .line {
+            background: #ccc;
+            box-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+        
+        .dark-mode .headlight {
+            background: #fff;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+        }
+        
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 12px 24px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        button:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                height: 300px;
+            }
+            
+            .car {
+                bottom: 60px;
+                width: 120px;
+                height: 45px;
+            }
+            
+            .car::before {
+                top: -25px;
+                left: 20px;
+                width: 70px;
+                height: 30px;
+            }
+            
+            .wheel {
+                width: 24px;
+                height: 24px;
+                bottom: -12px;
+            }
+            
+            .wheel1 { left: 15px; }
+            .wheel2 { right: 15px; }
+            
+            .window {
+                width: 35px;
+                height: 22px;
+                top: -15px;
+                right: 25px;
+            }
+            
+            /* .headlight {
+                width: 12px;
+                height: 8px;
+            }
+            
+            .headlight-front {
+                left: 15px;
+                top: 15px;
+            } */
+            
+            /* .siren {
+                width: 30px;
+                height: 30px;
+                top: 0;
+            } */
+            
+            .controls button {
+                padding: 10px 20px;
+                margin: 8px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <!-- Sky elements -->
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        
+        <!-- Trees -->
+        <div class="tree" style="left: 10%">
+            <div class="trunk"></div>
+            <div class="leaves"></div>
+        </div>
+        <div class="tree" style="left: 30%">
+            <div class="trunk"></div>
+            <div class="leaves"></div>
+        </div>
+        <div class="tree" style="left: 60%">
+            <div class="trunk"></div>
+            <div class="leaves"></div>
+        </div>
+        <div class="tree" style="left: 85%">
+            <div class="trunk"></div>
+            <div class="leaves"></div>
+        </div>
+        
+        <!-- Road -->
+        <div class="road">
+            <div class="line"></div>
+        </div>
+        
+        <!-- Car -->
+        <div class="car">
+            <div class="wheel wheel1"></div>
+            <div class="wheel wheel2"></div>
+            <div class="window"></div>
+            <div class="headlight headlight-front" id="headlight-front"></div>
+            <div class="headlight headlight-back" id="headlight-back"></div>
+            <!-- <div class="headlight headlight-front" id="headlight-front"></div> -->
+            <!-- <div class="siren" id="siren"></div> -->
+        </div>
+    </div>
+    <div class="controls">
+        <button onclick="moveForward()">Forward</button>
+        <button onclick="moveBackward()">Reverse</button>
+        <button onclick="stopCar()">Stop</button>
+        <!-- <button onclick="toggleSiren()">Siren</button> -->
+        <!-- <button onclick="toggleHeadlights()">Lights</button> -->
+        <button onclick="toggleHeadlights()">Lights</button>
+        <button onclick="toggleDarkMode()">Dark</button>
+    </div>
+
+    <script>
+        const car = document.querySelector('.car');
+        const container = document.querySelector('.container');
+        const line = document.querySelector('.line');
+        let position = 50;
+        let speed = 0;
+        let animationId;
+
+        // Create multiple road lines
+        function createRoadLines() {
+            const roadWidth = container.offsetWidth;
+            const road = document.querySelector('.road');
+            for(let i = 0; i < roadWidth/150; i++) {
+                const newLine = document.createElement('div');
+                newLine.className = 'line';
+                newLine.style.left = (i * 150) + 'px';
+                road.appendChild(newLine);
+            }
+        }
+
+        createRoadLines();
+
+        function updatePosition() {
+            position += speed;
+            
+            // Create wrapping effect
+            if (position > container.offsetWidth) {
+                position = -160;
+            } else if (position < -160) {
+                position = container.offsetWidth;
+            }
+            
+            car.style.left = position + 'px';
+            
+            if (speed !== 0) {
+                animationId = requestAnimationFrame(updatePosition);
+            }
+        }
+
+        function moveForward() {
+            speed = 5;
+            if (!animationId) {
+                updatePosition();
+            }
+            car.style.transform = 'scaleX(1)';
+        }
+
+        function moveBackward() {
+            speed = -5;
+            if (!animationId) {
+                updatePosition();
+            }
+            car.style.transform = 'scaleX(1)';
+        }
+
+        function stopCar() {
+            speed = 0;
+            cancelAnimationFrame(animationId);
+            animationId = null;
+        }
+
+        // const siren = document.getElementById('siren');
+        // const headlightFront = document.getElementById('headlight-front');
+        // let sirenOn = false;
+        // let lightsOn = false;
+        // let darkMode = false;
+
+        // function toggleSiren() {
+        //     siren.classList.toggle('active');
+        //     sirenOn = !sirenOn;
+        // }
+
+        const siren = document.getElementById('siren');
+        const headlightFront = document.getElementById('headlight-front');
+        const headlightBack = document.getElementById('headlight-back');
+        let sirenOn = false;
+        let lightsOn = false;
+
+        // function toggleSiren() {
+        //     if (sirenOn) {
+        //         siren.style.opacity = '0';
+        //     } else {
+        //         siren.style.opacity = '1';
+        //     }
+        //     sirenOn = !sirenOn;
+        // }
+
+        function toggleHeadlights() {
+            if (lightsOn) {
+                headlightFront.classList.add('off');
+                headlightBack.classList.add('off');
+            } else {
+                headlightFront.classList.remove('off');
+                headlightBack.classList.remove('off');
+            }
+            lightsOn = !lightsOn;
+        }
+
+        function toggleDarkMode() {
+            const container = document.getElementById('container');
+            container.classList.toggle('dark-mode');
+            darkMode = !darkMode;
+        }
+
+        
+        
+    </script>
+</body>
+</html>
